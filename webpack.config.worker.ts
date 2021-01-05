@@ -10,7 +10,7 @@ dotenv.config(dotEnvConfigs);
 
 const config: webpack.Configuration = {
     entry: {
-        service_worker: "./src/worker/start.worker.ts",
+        service_worker: "./src/components/workers/start.worker.ts",
     },
     mode: `production`,
     target: "node",
