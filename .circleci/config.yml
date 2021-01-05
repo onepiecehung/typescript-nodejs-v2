@@ -1,0 +1,64 @@
+version: 2.1
+
+jobs:
+    build:
+        docker:
+            - image: circleci/node:14.15.3
+            - image: mongo:latest
+            - image: rabbitmq:3.8.9-management-alpine
+            - image: redis:6.0.9-alpine
+        steps:
+            - checkout
+            - run: echo "docker"
+    test:
+        docker:
+            - image: circleci/node:14.15.3
+            - image: mongo:latest
+            - image: rabbitmq:3.8.9-management-alpine
+            - image: redis:6.0.9-alpine
+        steps:
+            - checkout
+            - run:
+                  name: "What branch am I on?"
+                  command: echo ${CIRCLE_BRANCH}
+            - run:
+                  name: "SETUP .env"
+                  command: |
+                      echo PORT=8018 > .env
+                      echo 'export PORT="8018"' >> $BASH_ENV
+            - run:
+                  name: npm install
+                  command: sudo npm install --no-cache
+            - run:
+                  name: sudo npm i -g pm2
+                  command: sudo npm i -g pm2
+            - run:
+                  name: sudo pm2 install typescript
+                  command: sudo pm2 install typescript
+            - run:
+                  name: run app with pm2
+                  command: sudo pm2 start pm2.deploy.json
+            - run:
+                  name: await 10s
+                  command: sleep 10
+            - run:
+                  name: curl http://localhost:${PORT}/rest/v1
+                  command: curl http://localhost:${PORT}/rest/v1
+            - run:
+                  name: sudo pm2 stop all
+                  command: sudo pm2 stop all
+            - run:
+                  name: sudo pm2 delete all
+                  command: sudo pm2 delete all
+
+workflows:
+    version: 2.1
+    build_and_test:
+        jobs:
+            - build
+            - test:
+                  requires:
+                      - build
+                  filters:
+                      branches:
+                          only: develop
