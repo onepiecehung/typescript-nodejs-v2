@@ -125,12 +125,6 @@ npm install
 npm run dev
 ```
 
-**_Successfully deployed the application_**
-
-<div style="text-align:center">
-<img width="100%" src="https://i.imgur.com/OxLd05c.png">
-</div>
-
 # 2. Project structure
 
 ```
