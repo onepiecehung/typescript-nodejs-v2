@@ -155,4 +155,4 @@ Not available
 
 ### Wait...bruh...i forgot what to do next... :confused: :worried: :sleeping:
 
-# Refer [Your wiki](https://github.com/onepiecehung/typescript-nodejs-v2/wiki)
+# Refer [Your wiki](https://github.com/onepiecehung/typescript-nodejs/wiki)
